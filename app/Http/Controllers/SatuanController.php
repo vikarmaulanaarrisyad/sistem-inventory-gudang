@@ -35,6 +35,15 @@ class SatuanController extends Controller
             ->make(true);
     }
 
+    public function ajaxSearch(Request $request)
+    {
+        $keyword = $request->get('q');
+
+        $categories = Satuan::where("name", "LIKE", "%$keyword%")->get();
+
+        return $categories;
+    }
+
     /**
      * Show the form for creating a new resource.
      */
