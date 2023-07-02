@@ -53,6 +53,14 @@
                              </p>
                          </a>
                      </li>
+                     <li class="nav-item">
+                         <a href="{{ route('supplier.index') }}" class="nav-link {{ request()->is('admin/supplier') ? 'active' : '' }}">
+                             <i class="nav-icon fas fa-user-alt"></i>
+                             <p>
+                                 Supplier
+                             </p>
+                         </a>
+                     </li>
                  @endif
 
                  @if (auth()->user()->hasRole('admin'))

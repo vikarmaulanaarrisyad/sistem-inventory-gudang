@@ -3,13 +3,13 @@
         let modal = '#modal-form';
         let button = '#submitBtn';
         let table;
-
+        
         table = $('.kategori-table').DataTable({
             serverSide: true,
             processing: true,
             autoWidth: false,
             ajax: {
-                url: '{{ route('category.data') }}',
+                url: '{{ route('supplier.data') }}',
             },
             columns: [{
                     data: 'DT_RowIndex',
@@ -20,6 +20,12 @@
                     data: 'name'
                 },
                 {
+                    data: 'email'
+                },
+                {
+                    data: 'phone'
+                },
+                {
                     data: 'aksi',
                     searchable: false,
                     sortable: false
@@ -27,7 +33,7 @@
             ],
         });
 
-        function addForm(url, title = "Tambah Kategori") {
+        function addForm(url, title = "Form Tambah Supplier") {
             $(modal).modal('show');
             $(`${modal} .modal-title`).text(title);
             $(`${modal} form`).attr('action', url);
@@ -37,7 +43,7 @@
             resetForm(`${modal} form`);
         }
 
-        function editForm(url, title = 'Edit Daftar Jadwal') {
+        function editForm(url, title = 'Form Edit Supplier') {
             $.get(url)
                 .done(response => {
                     $(modal).modal('show');

@@ -60,7 +60,7 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), $rules, $message);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors(), 'message' => 'Silahkan periksa isian anda dan coba lagi.'], 422);
+            return response()->json(['errors' => $validator->errors(), 'message' => 'Silahkan periksa isian anda dan coba lagi'], 422);
         }
 
         $data = [
