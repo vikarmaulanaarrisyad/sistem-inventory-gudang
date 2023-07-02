@@ -9,7 +9,7 @@
             processing: true,
             autoWidth: false,
             ajax: {
-                url: '{{ route('category.data') }}',
+                url: '{{ route('satuan.data') }}',
             },
             columns: [{
                     data: 'DT_RowIndex',
@@ -27,7 +27,7 @@
             ],
         });
 
-        function addForm(url, title = "Form Tambah Kategori") {
+        function addForm(url, title = "Form Tambah Satuan Barang") {
             $(modal).modal('show');
             $(`${modal} .modal-title`).text(title);
             $(`${modal} form`).attr('action', url);
@@ -37,7 +37,7 @@
             resetForm(`${modal} form`);
         }
 
-        function editForm(url, title = 'Form Edit Kategori') {
+        function editForm(url, title = 'Form Edit Satuan Barang') {
             $.get(url)
                 .done(response => {
                     $(modal).modal('show');

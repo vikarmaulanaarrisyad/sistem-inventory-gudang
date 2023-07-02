@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label for="name">Nama <span class="text-danger" style="font-size: 0.80em">Supplier *</span></label>
                 <input id="name" class="form-control form-control-border" type="text" name="name"
-                    autocomplete="off" placeholder="Masukkan nama kategori">
+                    autocomplete="off" placeholder="Masukkan nama supplier">
             </div>
         </div>
         <div class="col-lg-4">
@@ -18,7 +18,7 @@
                 <label for="email">Email <span class="text-danger" style="font-size: 0.80em">Supplier
                         *</span></label>
                 <input id="email" class="form-control form-control-border" type="email" name="email"
-                    autocomplete="off" placeholder="Masukkan nama kategori">
+                    autocomplete="off" placeholder="Masukkan nama supplier">
             </div>
         </div>
         <div class="col-lg-4">
@@ -26,7 +26,7 @@
                 <label for="phone">Nomor Hp <span class="text-danger" style="font-size: 0.80em">Supplier
                         *</span></label>
                 <input id="phone" class="form-control form-control-border" type="number" name="phone"
-                    autocomplete="off" placeholder="Masukkan nama kategori">
+                    autocomplete="off" placeholder="Masukkan nama supplier">
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\{
     CategoryController,
     DashboardController,
+    SatuanController,
     SupplierController,
 };
 use Illuminate\Support\Facades\Route;
@@ -34,7 +35,10 @@ Route::group([
         Route::get('category/data', [CategoryController::class, 'data'])->name('category.data');
         Route::resource('category', CategoryController::class)->except('create', 'edit');
 
-        Route::get('supplier/data', [SupplierController::class,'data'])->name('supplier.data');
+        Route::get('supplier/data', [SupplierController::class, 'data'])->name('supplier.data');
         Route::resource('supplier', SupplierController::class);
+
+        Route::get('satuan/data', [SatuanController::class, 'data'])->name('satuan.data');
+        Route::resource('satuan', SatuanController::class);
     });
 });

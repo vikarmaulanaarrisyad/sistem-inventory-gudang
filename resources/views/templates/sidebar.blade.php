@@ -46,7 +46,8 @@
 
                  @if (auth()->user()->hasRole('admin'))
                      <li class="nav-item">
-                         <a href="{{ route('category.index') }}" class="nav-link {{ request()->is('admin/category') ? 'active' : '' }}">
+                         <a href="{{ route('category.index') }}"
+                             class="nav-link {{ request()->is('admin/category') ? 'active' : '' }}">
                              <i class="nav-icon fas fa-cube"></i>
                              <p>
                                  Kategori
@@ -54,12 +55,40 @@
                          </a>
                      </li>
                      <li class="nav-item">
-                         <a href="{{ route('supplier.index') }}" class="nav-link {{ request()->is('admin/supplier') ? 'active' : '' }}">
+                         <a href="{{ route('supplier.index') }}"
+                             class="nav-link {{ request()->is('admin/supplier') ? 'active' : '' }}">
                              <i class="nav-icon fas fa-user-alt"></i>
                              <p>
                                  Supplier
                              </p>
                          </a>
+                     </li>
+
+                     <li class="nav-item {{ request()->is(['admin/satuan']) ? 'menu-is-opening menu-open' : '' }}">
+                         <a href="#" class="nav-link {{ request()->is(['admin/satuan*']) ? 'active' : '' }}">
+                             <i class="nav-icon fas fa-table"></i>
+                             <p>
+                                 Barang
+                                 <i class="fas fa-angle-left right"></i>
+                             </p>
+                         </a>
+                         <ul class="nav nav-treeview"
+                             style="{{ request()->is(['admin/satuan']) ? 'display: block' : 'display:none;' }}">
+                             <li class="nav-item">
+                                 <a href="{{ route('satuan.index') }}"
+                                     class="nav-link {{ request()->is(['admin/satuan*']) ? 'active' : '' }}">
+                                     <i class="far fa-circle nav-icon"></i>
+                                     <p>Satuan Barang</p>
+                                 </a>
+                             </li>
+                             <li class="nav-item">
+                                 <a href="../tables/data.html" class="nav-link">
+                                     <i class="far fa-circle nav-icon"></i>
+                                     <p>Data Barang</p>
+                                 </a>
+                             </li>
+
+                         </ul>
                      </li>
                  @endif
 
