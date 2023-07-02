@@ -45,14 +45,20 @@
                  @endif
 
                  @if (auth()->user()->hasRole('admin'))
-
+                     <li class="nav-item">
+                         <a href="{{ route('category.index') }}" class="nav-link {{ request()->is('admin/category') ? 'active' : '' }}">
+                             <i class="nav-icon fas fa-cube"></i>
+                             <p>
+                                 Kategori
+                             </p>
+                         </a>
+                     </li>
                  @endif
 
                  @if (auth()->user()->hasRole('admin'))
                      <li class="nav-header">PENGATURAN APLIKASI</li>
                      <li class="nav-item">
-                         <a href=""
-                             class="nav-link {{ request()->is('admin/setting') ? 'active' : '' }}">
+                         <a href="" class="nav-link {{ request()->is('admin/setting') ? 'active' : '' }}">
                              <i class="nav-icon fas fa-cogs"></i>
                              <p>
                                  Setting

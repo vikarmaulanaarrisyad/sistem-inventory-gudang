@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\{
+    CategoryController,
     DashboardController,
 };
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,12 @@ Route::group([
     'middleware' => ['auth', 'role:admin,gudang'],
 ], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::group([
+        'middleware' => 'role:admin',
+        'prefix' => 'admin'
+    ], function () {
+        Route::get('category/data',[CategoryController::class, 'data'])->name('category.data');
+        Route::resource('category', CategoryController::class)->except('create','edit');
+    });
 });
