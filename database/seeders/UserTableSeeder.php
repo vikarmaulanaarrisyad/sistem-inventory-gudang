@@ -22,5 +22,14 @@ class UserTableSeeder extends Seeder
         $admin->avatar = 'default.jpg';
         $admin->role_id = 1;
         $admin->save();
+
+        $user = new User;
+        $user->name = 'User';
+        $user->username = 'user';
+        $user->email = 'user@gmail.com';
+        $user->password = Hash::make('123456');
+        $user->avatar = 'default.jpg';
+        $user->role_id = 2;
+        $user->save();
     }
 }
