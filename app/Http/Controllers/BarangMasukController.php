@@ -83,7 +83,6 @@ class BarangMasukController extends Controller
         $barangMasuk->delete();
 
         return response()->json(['message' => 'Item berhasil dihapus']);
-
     }
 
     public function ambilDataBarang(Request $request)
@@ -99,7 +98,7 @@ class BarangMasukController extends Controller
 
     public function ambilDataItem(Request $request)
     {
-        $query = BarangMasuk::all();
+        $query = BarangMasuk::pending();
 
         return datatables($query)
             ->addIndexColumn()
@@ -125,5 +124,25 @@ class BarangMasukController extends Controller
             })
             ->escapeColumns([])
             ->make(true);
+    }
+
+    public function transaksiSelesai(Request $request)
+    {
+        $barangMasuk = BarangMasuk::where('transaksi', $request->transaksi)
+            ->where('status', 'pending')
+            ->get();
+
+        if ($barangMasuk->isEmpty()) {
+            return response()->json(['message' => 'Transaksi gagal disimpan. Pastikan item barang masuk tidak kosong.'], 422);
+        }
+        foreach ($barangMasuk as $item) {
+            $item->update(['status' => 'selesai']);
+
+            $barang = Barang::findOrfail($item->barang_id);
+            $barang->stock += $item->jumlah;
+            $barang->save();
+        }
+
+        return response()->json(['message' => 'Transaksi berhasil disimpan.']);
     }
 }

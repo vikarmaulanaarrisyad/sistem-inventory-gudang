@@ -126,7 +126,8 @@
                     </div>
 
                     <div class="card-footer">
-                        <Button class="btn btn-success btn-sm float-right"><i class="fas fa-save"></i> Simpan
+                        <Button id="btnSimpanTransaksi" onclick="simpanTransaksi()"
+                            class="btn btn-success btn-sm float-right"><i class="fas fa-save"></i> Simpan
                             Transaksi</Button>
                     </div>
 
@@ -134,6 +135,8 @@
             </x-card>
         </div>
     </div>
+
+    @include('admin.barangmasuk.form')
 @endsection
 
 @include('includes.datatables')
@@ -143,7 +146,8 @@
     <script>
         let modal = '#modal-form';
         let button = '#submitBtn';
-        let table;
+        let table, tabl2;
+
 
         table = $('.transaksi').DataTable({
             paging: false,
@@ -200,6 +204,45 @@
 
             ],
         });
+
+        table2 = $('.tableBarangPencarian').DataTable({
+            serverSide: true,
+            processing: true,
+            autoWidth: false,
+            ajax: {
+                url: '{{ route('ajax.barang_search') }}',
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: 'aksi',
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: 'code'
+                },
+                {
+                    data: 'name'
+                },
+                {
+                    data: 'harga'
+                },
+                {
+                    data: 'kategori'
+                },
+                {
+                    data: 'satuan'
+                },
+                {
+                    data: 'stock'
+                },
+
+            ],
+        });
     </script>
 @endpush
 
@@ -220,13 +263,12 @@
 
                 var numberTransaksi = 'T-' + formattedDate + '' + Math.floor(Math.random() * 100);
 
-
-
                 // Buat transaksi
                 $('#transaksi').val(numberTransaksi);
 
                 if (sudahAdaTransaksi) {
                     document.getElementById("tombolBuatTransaksiBaru").disabled = true;
+                    document.getElementById("btnSimpanTransaksi").disabled = false;
 
                     // Simpan transaksi ke localStorage
                     localStorage.setItem('transaksi', numberTransaksi);
@@ -273,7 +315,7 @@
         }
 
         function tampilModalCariBarang() {
-            alert();
+            $(modal).modal('show');
         }
 
         function tombolTambahItem() {
@@ -343,11 +385,9 @@
                         }).then(() => {
                             resetFormInput();
                             table.ajax.reload();
-
                         });
                     },
                     error: function(errors) {
-                        console.log('err ', errors)
                         Swal.fire({
                             icon: 'error',
                             title: 'Opps! Gagal',
@@ -366,7 +406,6 @@
             $('#hargajual').val('');
             $('#jumlah').val('');
         }
-
 
         function deleteData(url, name) {
             const swalWithBootstrapButtons = Swal.mixin({
@@ -418,6 +457,95 @@
             })
         }
 
+        function pilihDataBarang(barangId) {
+            $(modal).modal('hide');
+
+            $.ajax({
+                type: "POST",
+                url: '{{ route('barangmasuk.ambil_barang') }}',
+                data: {
+                    kodebarang: barangId
+                },
+                dataType: "json",
+                success: function(response) {
+                    $('#namabarang').val(response.data.name);
+                    $('#kdbarang').val(response.data.code);
+                    $('#namabarang').val(response.data.name);
+                    $('#hargajual').val(format_uang(response.data.harga));
+                },
+                error: function(errors) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Opps! Gagal',
+                        text: errors.responseJSON.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
+            });
+
+        }
+
+        function simpanTransaksi() {
+            let transaksi = $('#transaksi').val();
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true,
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Apakah anda yakin?',
+                text: 'Anda akan menyimpan data transaksi ' + transaksi +
+                    ' !',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Iya, Hapus!',
+                cancelButtonText: 'Batalkan',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: '{{ route('barangmasuk.transaksi_selesai') }}',
+                        data: {
+                            transaksi: transaksi
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                            }).then(() => {
+                                localStorage.removeItem('transaksi');
+                                resetFormInput();
+                                table.ajax.reload();
+                                location.reload();
+                            });
+                        },
+                        error: function(errors) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Opps! Gagal',
+                                text: errors.responseJSON.message,
+                                showConfirmButton: true,
+                            });
+                        }
+                    });
+                }
+            })
+
+
+        }
+
         // Cek apakah ada transaksi tersimpan di localStorage saat halaman dimuat
         window.onload = function() {
             var transaksi = localStorage.getItem('transaksi');
@@ -428,6 +556,11 @@
 
                 // Menonaktifkan tombol saat halaman dimuat jika ada transaksi tersimpan
                 document.getElementById("tombolBuatTransaksiBaru").disabled = true;
+                document.getElementById("btnSimpanTransaksi").disabled = false;
+
+            } else {
+
+                document.getElementById("btnSimpanTransaksi").disabled = true;
             }
         }
     </script>

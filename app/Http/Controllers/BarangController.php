@@ -46,6 +46,32 @@ class BarangController extends Controller
             ->make(true);
     }
 
+    public function ajaxSearch(Request $request)
+    {
+        $query = Barang::with('category', 'satuan')->latest();
+
+        return datatables($query)
+            ->addIndexColumn()
+            ->addColumn('kategori', function ($query) {
+                return $query->category->name;
+            })
+            ->addColumn('satuan', function ($query) {
+                return  $query->satuan->name;
+            })
+            ->addColumn('harga', function ($query) {
+                return format_uang($query->harga);
+            })
+            ->addColumn('aksi', function ($query) {
+                return '
+                   <div class="btn-group">
+                        <button type="button" onclick="pilihDataBarang(`' .  $query->code . '`)" class="btn btn-primary btn-xs"><i class="fas fa-pencil-alt"></i> Edit</button>
+                   </div>
+                ';
+            })
+            ->escapeColumns([])
+            ->make(true);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -185,4 +211,6 @@ class BarangController extends Controller
 
         return response()->json(['message' => 'Data berhasil disimpan']);
     }
+
+
 }

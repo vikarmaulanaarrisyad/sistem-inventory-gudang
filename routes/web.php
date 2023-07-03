@@ -45,12 +45,14 @@ Route::group([
         Route::get('satuan/data', [SatuanController::class, 'data'])->name('satuan.data');
         Route::resource('satuan', SatuanController::class);
 
+        Route::get('ajax/barang/search', [BarangController::class, 'ajaxSearch'])->name('ajax.barang_search');
         Route::get('barang/data', [BarangController::class, 'data'])->name('barang.data');
         Route::get('barang/{barang}/detail', [BarangController::class, 'detail'])->name('barang.detail');
         Route::resource('barang', BarangController::class);
 
         Route::get('/barangmasuk/ambil_item_barang',[BarangMasukController::class,'ambilDataItem'])->name('barangmasuk.ambil_item_barang');
         Route::post('/barangmasuk/ambil_barang',[BarangMasukController::class,'ambilDataBarang'])->name('barangmasuk.ambil_barang');
+        Route::post('/barangmasuk/selesai_transaksi',[BarangMasukController::class,'transaksiSelesai'])->name('barangmasuk.transaksi_selesai');
         Route::resource('/barangmasuk',BarangMasukController::class);
     });
 });

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class BarangMasuk extends Model
 {
@@ -21,8 +22,11 @@ class BarangMasuk extends Model
         return $this->belongsTo(Barang::class);
     }
 
-    public function scopePending()
+    /**
+     * Scope a query to only include active users.
+     */
+    public function scopePending(Builder $query): void
     {
-        $this->where('status', 'pending');
+        $query->where('status', 'pending');
     }
 }
