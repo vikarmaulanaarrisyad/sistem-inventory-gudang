@@ -18,8 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('satuan_id')->nullable();
             $table->integer('stock')->default(0);
-            $table->integer('harga_beli')->default(0);
-            $table->integer('harga_jual')->default(0);
+            $table->integer('harga')->default(0);
             $table->timestamps();
         });
     }

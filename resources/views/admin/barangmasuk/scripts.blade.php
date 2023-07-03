@@ -1,16 +1,15 @@
 @push('scripts')
     <script>
         let modal = '#modal-form';
-        let modalDetail = '#modalDetail';
         let button = '#submitBtn';
         let table;
 
-        table = $('.barang-table').DataTable({
+        table = $('.kategori-table').DataTable({
             serverSide: true,
             processing: true,
             autoWidth: false,
             ajax: {
-                url: '{{ route('barang.data') }}',
+                url: '{{ route('category.data') }}',
             },
             columns: [{
                     data: 'DT_RowIndex',
@@ -18,22 +17,7 @@
                     sortable: false
                 },
                 {
-                    data: 'code'
-                },
-                {
                     data: 'name'
-                },
-                {
-                    data: 'harga'
-                },
-                {
-                    data: 'kategori'
-                },
-                {
-                    data: 'satuan'
-                },
-                {
-                    data: 'stock'
                 },
                 {
                     data: 'aksi',
@@ -43,7 +27,7 @@
             ],
         });
 
-        function addForm(url, title = "Form Tambah Data Barang") {
+        function addForm(url, title = "Form Tambah Kategori") {
             $(modal).modal('show');
             $(`${modal} .modal-title`).text(title);
             $(`${modal} form`).attr('action', url);
@@ -53,7 +37,7 @@
             resetForm(`${modal} form`);
         }
 
-        function editForm(url, title = 'Form Edit Data Barang') {
+        function editForm(url, title = 'Form Edit Kategori') {
             $.get(url)
                 .done(response => {
                     $(modal).modal('show');
@@ -64,17 +48,9 @@
                     $(button).prop('disabled', false);
                     resetForm(`${modal} form`);
                     loopForm(response.data);
-
-                    var categories = new Option(response.data.category.name, response.data.category.id, true, true);
-                    var satuan = new Option(response.data.satuan.name, response.data.satuan.id, true, true);
-
-                    $('#categories').append(categories).trigger('change');
-                    $('#satuan').append(satuan).trigger('change');
-                    $('#harga').val(format_uang(response.data.harga));
-
                 })
                 .fail(errors => {
-                    Swal.fire({
+                    Swall.fire({
                         icon: 'error',
                         title: 'Opps! Gagal',
                         text: errors.responseJSON.message,
@@ -82,21 +58,6 @@
                     });
                     $('#spinner-border').hide();
                     $(button).prop('disabled', false);
-                });
-        }
-
-        function detailForm(url, title = 'Detail Barang') {
-            $.get(url)
-                .done(response => {
-                    $(modalDetail).modal('show');
-                    $(`${modalDetail} .modal-title`).text(title);
-
-                    $(`${modalDetail} .modal-body #kodeBarang`).text(response.data.code)
-                    $(`${modalDetail} .modal-body #namaBarang`).text(response.data.name)
-                    $(`${modalDetail} .modal-body #kategoriBarang`).text(response.data.category.name)
-                    $(`${modalDetail} .modal-body #satuanBarang`).text(response.data.satuan.name)
-                    $(`${modalDetail} .modal-body #hargaBarang`).text(format_uang(response.data.harga))
-                    $(`${modalDetail} .modal-body #stokBarang`).text(response.data.stock)
                 });
         }
 
@@ -193,43 +154,5 @@
                 }
             })
         }
-
-        function formatUang(angka) {
-            return angka.toLocaleString('id-ID');
-        }
-
-        $('#categories').select2({
-            placeholder: 'Pilih kategori',
-            ajax: {
-                url: '{{ route('ajax.category_search') }}',
-                processResults: function(data) {
-                    return {
-                        results: data.map(function(item) {
-                            return {
-                                id: item.id,
-                                text: item.name
-                            }
-                        })
-                    }
-                }
-            }
-        });
-
-        $('#satuan').select2({
-            placeholder: 'Pilih satuan',
-            ajax: {
-                url: '{{ route('ajax.satuan_search') }}',
-                processResults: function(data) {
-                    return {
-                        results: data.map(function(item) {
-                            return {
-                                id: item.id,
-                                text: item.name
-                            }
-                        })
-                    }
-                }
-            }
-        });
     </script>
 @endpush

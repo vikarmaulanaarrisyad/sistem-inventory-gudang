@@ -30,14 +30,9 @@
                             <td id="satuanBarang">0</td>
                         </tr>
                         <tr>
-                            <td style="width: 15px">Harga Beli Barang</td>
+                            <td style="width: 15px">Harga Barang</td>
                             <td style="width: 5px">:</td>
-                            <td id="hargaBeliBarang">0</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 15px">Harga Jual Barang</td>
-                            <td style="width: 5px">:</td>
-                            <td id="hargaJualBarang">0</td>
+                            <td id="hargaBarang">0</td>
                         </tr>
                         <tr>
                             <td style="width: 15px">Stok Barang</td>

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Barang extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'code','category_id','satuan_id','stock','harga_beli','harga_jual'];
+    protected $fillable = ['name', 'code','category_id','satuan_id','stock','harga'];
 
     /**
      * Get the route key for the model.

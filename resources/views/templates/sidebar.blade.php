@@ -64,31 +64,50 @@
                          </a>
                      </li>
 
-                     <li class="nav-item {{ request()->is(['admin/satuan*','admin/barang*']) ? 'menu-is-opening menu-open' : '' }}">
-                         <a href="#" class="nav-link {{ request()->is(['admin/satuan*','admin/barang*']) ? 'active' : '' }}">
-                             <i class="nav-icon fas fa-table"></i>
+                     <li
+                         class="nav-item {{ request()->is(['admin/satuan', 'admin/barang']) ? 'menu-is-opening menu-open' : '' }}">
+                         <a href="#"
+                             class="nav-link {{ request()->is(['admin/satuan', 'admin/barang']) ? 'active' : '' }}">
+                             <i class="nav-icon fas fa-industry"></i>
                              <p>
                                  Barang
                                  <i class="fas fa-angle-left right"></i>
                              </p>
                          </a>
                          <ul class="nav nav-treeview"
-                             style="{{ request()->is(['admin/satuan*','admin/barang*']) ? 'display: block' : 'display:none;' }}">
+                             style="{{ request()->is(['admin/satuan*', 'admin/barang']) ? 'display: block' : 'display:none;' }}">
                              <li class="nav-item">
                                  <a href="{{ route('satuan.index') }}"
-                                     class="nav-link {{ request()->is(['admin/satuan*']) ? 'active' : '' }}">
+                                     class="nav-link {{ request()->is(['admin/satuan']) ? 'active' : '' }}">
                                      <i class="far fa-circle nav-icon"></i>
                                      <p>Satuan Barang</p>
                                  </a>
                              </li>
                              <li class="nav-item">
-                                 <a href="{{ route('barang.index') }}" class="nav-link {{ request()->is(['admin/barang*']) ? 'active' : '' }}">
+                                 <a href="{{ route('barang.index') }}"
+                                     class="nav-link {{ request()->is(['admin/barang']) ? 'active' : '' }}">
                                      <i class="far fa-circle nav-icon"></i>
                                      <p>Data Barang</p>
                                  </a>
                              </li>
 
                          </ul>
+                     </li>
+
+                     <li class="nav-header">TRANSAKSI DATA</li>
+                     <li class="nav-item">
+                         <a href="{{ route('barangmasuk.index') }}"
+                             class="nav-link {{ request()->is(['admin/barangmasuk']) ? 'active' : '' }}">
+                             <i class="fas fa-download nav-icon"></i>
+                             <p>Barang Masuk</p>
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="#"
+                             class="nav-link {{ request()->is(['admin/barangkeluar']) ? 'active' : '' }}">
+                             <i class="fas fa-upload nav-icon"></i>
+                             <p>Barang Keluar</p>
+                         </a>
                      </li>
                  @endif
 

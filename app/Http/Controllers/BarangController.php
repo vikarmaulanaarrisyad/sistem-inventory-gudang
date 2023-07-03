@@ -31,7 +31,7 @@ class BarangController extends Controller
                 return  $query->satuan->name;
             })
             ->addColumn('harga', function ($query) {
-                return 'Rp ' . format_uang($query->harga_jual);
+                return format_uang($query->harga);
             })
             ->addColumn('aksi', function ($query) {
                 return '
@@ -65,8 +65,7 @@ class BarangController extends Controller
             'code' => 'required|min:1',
             'categories' => 'required',
             'satuan' => 'required',
-            'harga_beli' => 'required|regex:/^[0-9.]+$/',
-            'harga_jual' => 'required|regex:/^[0-9.]+$/',
+            'harga' => 'required|regex:/^[0-9.]+$/',
             'stock' => 'required|min:1',
         ];
 
@@ -75,8 +74,7 @@ class BarangController extends Controller
             'code.required' => 'Kode barang wajib diisi',
             'categories.required' => 'Kategori barang wajib diisi',
             'satuan.required' => 'Satuan barang wajib diisi',
-            'harga_beli.required' => 'Harga beli barang wajib diisi',
-            'harga_jual.required' => 'Harga jual barang wajib diisi',
+            'harga.required' => 'Harga barang wajib diisi',
             'stock.required' => 'Stok barang wajib diisi',
 
             'name.min' => 'Nama barang minimal 2 karakter',
@@ -95,8 +93,7 @@ class BarangController extends Controller
             'code' => trim($request->code),
             'category_id' => $request->categories,
             'satuan_id' => $request->satuan,
-            'harga_beli' => str_replace('.', '', $request->harga_beli),
-            'harga_jual' => str_replace('.', '', $request->harga_jual),
+            'harga' => str_replace('.', '', $request->harga),
             'stock' => $request->stock,
         ];
 
@@ -142,8 +139,7 @@ class BarangController extends Controller
             'code' => 'required|min:1',
             'categories' => 'required',
             'satuan' => 'required',
-            'harga_beli' => 'required|regex:/^[0-9.]+$/',
-            'harga_jual' => 'required|regex:/^[0-9.]+$/',
+            'harga' => 'required|regex:/^[0-9.]+$/',
             'stock' => 'required|min:1',
         ];
 
@@ -152,8 +148,7 @@ class BarangController extends Controller
             'code.required' => 'Kode barang wajib diisi',
             'categories.required' => 'Kategori barang wajib diisi',
             'satuan.required' => 'Satuan barang wajib diisi',
-            'harga_beli.required' => 'Harga beli barang wajib diisi',
-            'harga_jual.required' => 'Harga jual barang wajib diisi',
+            'harga.required' => 'Harga barang wajib diisi',
             'stock.required' => 'Stok barang wajib diisi',
 
             'name.min' => 'Nama barang minimal 2 karakter',
@@ -172,8 +167,7 @@ class BarangController extends Controller
             'code' => trim($request->code),
             'category_id' => $request->categories,
             'satuan_id' => $request->satuan,
-            'harga_beli' => str_replace('.', '', $request->harga_beli),
-            'harga_jual' => str_replace('.', '', $request->harga_jual),
+            'harga' => str_replace('.', '', $request->harga),
             'stock' => $request->stock,
         ];
 

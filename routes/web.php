@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\{
     BarangController,
+    BarangMasukController,
     CategoryController,
     DashboardController,
     SatuanController,
@@ -47,5 +48,9 @@ Route::group([
         Route::get('barang/data', [BarangController::class, 'data'])->name('barang.data');
         Route::get('barang/{barang}/detail', [BarangController::class, 'detail'])->name('barang.detail');
         Route::resource('barang', BarangController::class);
+
+        Route::get('/barangmasuk/ambil_item_barang',[BarangMasukController::class,'ambilDataItem'])->name('barangmasuk.ambil_item_barang');
+        Route::post('/barangmasuk/ambil_barang',[BarangMasukController::class,'ambilDataBarang'])->name('barangmasuk.ambil_barang');
+        Route::resource('/barangmasuk',BarangMasukController::class);
     });
 });
